@@ -1,0 +1,541 @@
+/*******************************
+ * 1. Variables & Configuration
+ *******************************/
+:root {
+    /* Nouvelle palette principale */
+    --primary: #4F46E5;         /* Indigo vif pour l'action principale */
+    --primary-hover: #4338CA;   /* Indigo plus foncé pour hover */
+    
+    /* Couleurs sémantiques */
+    --success: #059669;         /* Vert émeraude */
+    --danger: #DC2626;          /* Rouge vif */
+    --danger-hover: #B91C1C;    /* Rouge plus foncé */
+    
+    /* Couleurs de fond - Dégradé de gris chaud */
+    --bg: #121212;             /* Fond principal plus doux */
+    --surface: #1E1E1E;        /* Surface des cartes */
+    --surface-hover: #2A2A2A;  /* Hover des surfaces */
+    
+    /* Texte - Plus de contraste et de lisibilité */
+    --text: #F9FAFB;           /* Blanc cassé pour le texte principal */
+    --text-secondary: #9CA3AF; /* Gris clair pour le texte secondaire */
+    
+    /* Bordures - Plus subtiles */
+    --border: #303030;         /* Bordures plus douces */
+    
+    /* Accents spéciaux */
+    --cloudflare: #F6821F;     /* Orange Cloudflare */
+    --ssl: #059669;            /* Vert pour SSL */
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    
+    /* Espacements */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 24px;
+    
+    /* Rayons de bordure */
+    --radius-sm: 3px;
+    --radius-md: 4px;
+    --radius-lg: 8px;
+    
+    /* Nouvelle couleur pour le chargement */
+    --warning: #EAB308;         /* Jaune pour le chargement */
+}
+
+/*******************************
+ * 2. Reset & Base
+ *******************************/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 360px;
+    height: 520px;
+    font-family: -apple-system, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+}
+
+/*******************************
+ * 3. Layout & Structure
+ *******************************/
+.app-container {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 15px);
+    overflow: hidden;
+}
+
+.main-view, .detail-view {
+    position: absolute;
+    inset: 0;
+    padding: var(--spacing-lg);
+    transition: transform var(--transition-fast);
+    padding-bottom: var(--spacing-lg);
+}
+
+.detail-view {
+    background: var(--bg);
+    transform: translateX(100%);
+}
+
+.detail-view.active {
+    transform: translateX(0);
+}
+
+/*******************************
+ * 4. Typography
+ *******************************/
+h2, h3 {
+    color: var(--text);
+    letter-spacing: -0.3px;
+    font-weight: 500;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h2 { 
+    font-size: 1.4rem; 
+    margin-bottom: var(--spacing-lg);
+    min-height: 40px; /* Hauteur fixe pour assurer un alignement cohérent */
+}
+
+h3 { 
+    font-size: 1.1rem;
+    min-height: 35px; /* Hauteur fixe légèrement plus petite que h2 */
+}
+
+/*******************************
+ * 5. Forms & Inputs
+ *******************************/
+.input-group {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: 0; /* Supprimé la marge du bas */
+}
+
+.input-group input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    color: var(--text);
+    font-size: 0.9rem;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/*******************************
+ * 6. Buttons
+ *******************************/
+/* Base button styles */
+button {
+    border: none;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+}
+
+/* Primary buttons */
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+}
+
+/* Secondary buttons */
+.btn-secondary {
+    background: var(--surface);
+    color: var(--text);
+}
+
+.btn-secondary:hover {
+    background: var(--surface-hover);
+}
+
+/* Danger buttons */
+.btn-danger {
+    background: var(--danger);
+    color: white;
+}
+
+.btn-danger:hover {
+    background: var(--danger-hover);
+}
+
+/* Utility classes */
+.btn-block {
+    width: 100%;
+    margin-bottom: var(--spacing-md);
+}
+
+/* Loading state */
+.btn-loading {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/*******************************
+ * 7. Lists & Items
+ *******************************/
+.sites-list {
+    height: calc(100% - 120px); /* Ajusté pour le nouveau header */
+    overflow-y: auto;
+    padding: 2px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+    margin-bottom: 0;
+}
+
+/* Modification de l'animation des sites */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.site-item {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-md);
+    background: var(--surface);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-xs);
+    cursor: pointer;
+    border: 1px solid var(--border);
+    animation: slideDown 0.3s ease forwards;
+}
+
+.site-item:hover {
+    background: var(--surface-hover);
+}
+
+.site-item.removing {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all var(--transition-normal);
+}
+
+.site-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
+}
+
+.site-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.site-favicon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.site-url {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/*******************************
+ * 8. Status & Badges
+ *******************************/
+.status {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.status.online { 
+    background: var(--success); 
+    color: white;
+}
+
+.status.offline { 
+    background: var(--danger); 
+    color: white;
+}
+
+.status.loading { 
+    background: var(--warning); 
+    color: black;
+}
+
+.protection-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.protection-badge.cloudflare { 
+    background: var(--cloudflare);
+    color: #000000;
+}
+
+.protection-badge.ssl { 
+    background: var(--ssl);
+    color: var(--text);
+}
+
+.protection-badge.none { 
+    background: #27272A;
+    color: var(--text-secondary);
+}
+
+/*******************************
+ * 9. Detail View Components
+ *******************************/
+.detail-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--border);
+}
+
+/* Nouveau style pour le conteneur du titre */
+.detail-header h2 {
+    flex: 1;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+/* Style pour le bouton retour */
+.detail-header .btn-secondary {
+    position: absolute;
+    left: var(--spacing-lg);
+}
+
+.detail-content {
+    height: calc(100% - 70px); /* Ajusté pour le footer */
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+    padding-bottom: var(--spacing-md);
+}
+
+.info-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-group label {
+    display: block;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-group p {
+    color: var(--text);
+    font-size: 0.95rem;
+    word-break: break-all;
+    line-height: 1.4;
+}
+
+/*******************************
+ * 10. Statistics
+ *******************************/
+.history-stats {
+    display: block;
+    margin-bottom: var(--spacing-md);
+}
+
+.stat-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.stat-label {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    margin-bottom: var(--spacing-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    color: var(--text);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/*******************************
+ * 11. Animations
+ *******************************/
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.refresh-button.loading {
+    animation: spin 1s linear infinite;
+}
+
+/*******************************
+ * 12. Utilities
+ *******************************/
+.server-response {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-md);
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    max-height: 80px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+}
+
+/*******************************
+ * 13. Scrollbar Styling
+ *******************************/
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: var(--radius-md);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* Ajout d'effets de profondeur subtils */
+.site-item, .stat-item, .server-response {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/*******************************
+ * 14. Footer
+ *******************************/
+.app-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: var(--spacing-sm) var(--spacing-md);
+    z-index: 10;
+    height: 35px; /* Hauteur fixe pour le footer */
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.footer-text a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: bold;
+    background-image: linear-gradient(90deg, 
+        #C6A148,     /* or doré */
+        #E5D08F,     /* doré clair */
+        #A17C37,     /* doré foncé */
+        #C6A148      /* retour à la première couleur pour une transition fluide */
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient 3s linear infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+.footer-version {
+    opacity: 0.7;
+}
+
+/*******************************
+ * Header Styles
+ *******************************/
+header {
+    background: var(--surface);
+    margin: calc(var(--spacing-lg) * -1) calc(var(--spacing-lg) * -1) var(--spacing-lg);
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border);
+}
+
+header h1 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 35px;
+}

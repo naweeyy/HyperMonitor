@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Hyper Monitor",
+  "version": "1.0",
+  "description": "Vérifie le statut des sites web",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "http://*/",
+    "https://*/"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+} 

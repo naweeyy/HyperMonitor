@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyper Monitor</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="app-container">
+        <main class="main-view">
+            <header>
+                <h1 class="h2">Hyper Monitor</h1>
+                <form class="input-group" id="addSiteForm" aria-label="Ajouter un site">
+                    <input type="text" 
+                           id="siteInput" 
+                           placeholder="Entrez un site web ou une IP"
+                           aria-label="URL du site"
+                           autocomplete="off"
+                           required>
+                </form>
+            </header>
+            <section class="sites-list" 
+                     id="sitesList" 
+                     role="list" 
+                     aria-label="Liste des sites">
+            </section>
+        </main>
+
+        <aside class="detail-view" id="detailView" aria-hidden="true">
+            <header class="detail-header">
+                <button class="btn-secondary back-button" 
+                        id="backButton"
+                        aria-label="Retour à la liste">
+                    <span class="icon" aria-hidden="true">↩️</span>
+                </button>
+                <h2 class="h3" id="detailTitle">Détails du site</h2>
+            </header>
+            
+            <div class="detail-content">
+                <section class="detail-info">
+                    <div class="info-group">
+                        <label for="detailUrl">URL</label>
+                        <p id="detailUrl" aria-live="polite"></p>
+                    </div>
+
+                    <div class="info-group status-group">
+                        <label>Statut</label>
+                        <div class="status-details">
+                            <div id="detailStatus" aria-live="polite"></div>
+                            <span id="detailResponseTime" 
+                                  class="response-time" 
+                                  aria-live="polite"></span>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <label>Protection</label>
+                        <div class="protection-info">
+                            <span id="cloudflareStatus" 
+                                  class="protection-badge"
+                                  aria-live="polite"></span>
+                            <span id="sslStatus" 
+                                  class="protection-badge"
+                                  aria-live="polite"></span>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <label>Dernière vérification</label>
+                        <p id="detailLastCheck" aria-live="polite"></p>
+                    </div>
+
+                    <div class="info-group">
+                        <label for="serverResponse">Réponse serveur</label>
+                        <pre id="serverResponse" 
+                             class="server-response" 
+                             aria-live="polite"></pre>
+                    </div>
+
+                    <div class="info-group">
+                        <label>Informations complémentaires</label>
+                        <div class="history-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Latence moyenne</span>
+                                <span id="avgResponseTime" 
+                                      class="stat-value"
+                                      aria-live="polite">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <button class="btn-primary btn-block refresh-button" 
+                        id="refreshButton"
+                        aria-label="Rafraîchir le site">
+                    Rafraîchir le site
+                </button>
+
+                <button class="btn-danger btn-block" 
+                        id="detailDelete"
+                        aria-label="Supprimer le site">
+                    Supprimer le site
+                </button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Ajout du footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <span class="footer-text">&copy; 2025 <a href="https://github.com/Naweeyy" target="_blank">Naweeyy</a></span>
+            <span class="footer-version"></span>
+        </div>
+    </footer>
+
+    <script src="popup.js" defer></script>
+</body>
+</html> 
