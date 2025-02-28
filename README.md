@@ -1,6 +1,6 @@
-# Nom de l'Extension Chrome
+# Hyper Monitor
 
-Une courte description de votre extension Chrome. Expliquez en quelques mots son utilité et ce qu'elle apporte aux utilisateurs.
+Hyper Monitor est une extension Chrome qui vous permet de surveiller en temps réel le statut des sites web. Grâce à elle, vous pouvez instantanément savoir si un site est en ligne ou hors service, vous offrant ainsi une meilleure visibilité sur la disponibilité de vos plateformes préférées. 🚀
 
 ## 🚀 Installation en local
 
